@@ -1,20 +1,21 @@
 import { FaAngleDoubleRight } from '../../node_modules/react-icons/fa';
 import { v4 as uuidv4 } from 'uuid';
 
-const JobInfo = (props) => {
+const JobInfo = ({ jobs, currentItem }) => {
+    const { title, company, dates, duties } = jobs[currentItem];
     return (
-        <section>
+        <article className='job-info'>
+            <h3>{title}</h3>
+            <span className='job-company'>{company}</span>
+            <p className='job-date'>{dates}</p>
             <div>
-                <h3>{props.job.title}</h3>
-                <span className='job-company'>{props.job.company}</span>
-                <p className='job-date'>{props.job.dates}</p>
-                <ul>
-                    {props.job.duties && props.job.duties.map((dutie) => {
-                        return <li key={uuidv4()}><FaAngleDoubleRight className='job-icon' />{dutie}</li>
-                    })}
-                </ul>
+                {duties && duties.map((dutie) => {
+                    return <div key={uuidv4()} className='job-desc'>
+                        <FaAngleDoubleRight className='job-icon' />
+                        <p>{dutie}</p></div>
+                })}
             </div>
-        </section>
+        </article>
     )
 }
 

@@ -5,14 +5,14 @@ import BtnContainer from "./components/BtnContainer";
 const url = 'https://course-api.com/react-tabs-project';
 
 const App = () => {
+  const [isLoading, setIsLoading] = useState(true);
+  const [isError, setIsError] = useState(false);
   const [jobs, setJobs] = useState([]);
   const [currentItem, setCurrentItem] = useState(0);
-  const [isLoading, setIsLoading] = useState(false);
-  const [isError, setIsError] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
-      setIsLoading(true);
+      // setIsLoading(true);
       try {
         const response = await fetch(url);
         if (!response.ok) {
@@ -32,7 +32,11 @@ const App = () => {
   }, []);
 
   if (isLoading) {
-    return <h2>Loading...</h2>
+    return (
+      <section className="jobs-center">
+        <div className="loading"></div>
+      </section>
+    )
   }
 
   if (isError) {
@@ -41,10 +45,10 @@ const App = () => {
 
   return (
     <main>
-      <div className="jobs-center">
+      <section className="jobs-center">
         <BtnContainer jobs={jobs} currentItem={currentItem} setCurrentItem={setCurrentItem} />
-        {jobs[currentItem] && <JobInfo job={jobs[currentItem]} currentItem={currentItem}/> }
-      </div>
+        {jobs && <JobInfo jobs={jobs} currentItem={currentItem}/>}
+      </section>
     </main>
   );
 };
